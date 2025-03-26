@@ -1,0 +1,24 @@
+{
+  "name": "taste-of-caribbean-app",
+  "version": "1.0.0",
+  "description": "A food ordering app inspired by Caribbean cuisine.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ss889/Taste-Of-Caribbean-App.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ss889/Taste-Of-Caribbean-App/issues"
+  },
+  "homepage": "https://github.com/ss889/Taste-Of-Caribbean-App#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^17.0.0"
+  }
+}
