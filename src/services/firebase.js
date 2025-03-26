@@ -1,15 +1,21 @@
 /**
- * Firebase Configuration and Services
+ * Firebase Setup
  * 
- * This file will contain:
- * - Firebase initialization
- * - Authentication methods
+ * What this file does:
+ * - Sets up Firebase for the app
+ * - Handles user login/signup
+ * - Manages the database
+ * - Stores user data and orders
+ * 
+ * Features included:
+ * - User authentication
  * - Database operations
- * - Storage operations
+ * - File storage for images
  * 
- * TODO:
- * 1. Add Firebase config
- * 2. Implement auth methods
- * 3. Create database helpers
- * 4. Set up storage methods
+ * Functions to add:
+ * 1. Login function
+ * 2. Sign up function
+ * 3. Save order to database
+ * 4. Update user points
+ * 5. Store food images
  */

@@ -1,16 +1,22 @@
 /**
- * Registration Component
+ * Sign Up Page
  * 
- * Requirements:
- * - Registration form with name, email, and password fields
- * - Form validation (password requirements, email format)
- * - Firebase integration for user creation
- * - Success/error message display
- * - Navigation to login page
+ * What this file does:
+ * - Shows the sign up form for new users
+ * - Creates new user accounts with Firebase
+ * - Makes sure passwords are strong enough
+ * - Shows error messages if something goes wrong
  * 
- * TODO:
- * 1. Implement form validation
- * 2. Add Firebase user creation
- * 3. Add success/error handling
- * 4. Style the component
+ * Components needed:
+ * - Sign up form
+ * - Password strength checker
+ * - Error message box
+ * 
+ * Features to add:
+ * 1. Name input field
+ * 2. Email input field
+ * 3. Password input field
+ * 4. Password rules checker
+ * 5. Sign up button
+ * 6. Link back to login page
  */

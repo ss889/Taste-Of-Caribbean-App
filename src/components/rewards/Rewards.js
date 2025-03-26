@@ -1,15 +1,21 @@
 /**
- * Rewards Component
+ * Rewards Page
  * 
- * Requirements:
- * - Display customer points
- * - Show available offers
- * - Point history
- * - Redemption options
+ * What this file does:
+ * - Shows how many points the user has
+ * - Lists available rewards to redeem
+ * - Shows order history and points earned
+ * - Lets users redeem points for rewards
  * 
- * TODO:
- * 1. Implement points display
- * 2. Create offers section
- * 3. Add point history
- * 4. Style the component
+ * Components needed:
+ * - Points display
+ * - Rewards list
+ * - Order history
+ * 
+ * Features to add:
+ * 1. Current points balance
+ * 2. Available rewards to redeem
+ * 3. Points history from orders
+ * 4. Redeem points button
+ * 5. Special member deals
  */

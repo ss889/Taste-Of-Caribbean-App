@@ -1,15 +1,21 @@
 /**
- * Checkout Component
+ * Checkout Page
  * 
- * Requirements:
- * - Order summary display
- * - Payment method selection
- * - Delivery options
- * - Total calculation
+ * What this file does:
+ * - Shows all items in the cart
+ * - Calculates the total price
+ * - Handles payment and delivery info
+ * - Processes the order
  * 
- * TODO:
- * 1. Implement order summary
- * 2. Add payment method integration
- * 3. Create delivery options
- * 4. Add total calculation logic
+ * Components needed:
+ * - Order summary list
+ * - Payment form
+ * - Delivery address form
+ * 
+ * Features to add:
+ * 1. List of items in cart
+ * 2. Total price calculator
+ * 3. Payment method selector
+ * 4. Delivery address form
+ * 5. Place order button
  */
