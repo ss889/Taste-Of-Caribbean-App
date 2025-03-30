@@ -1,14 +1,16 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
+import Menu from './components/menu/Menu';
 
 export default function App() {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text style={styles.title}>Welcome to Taste of Caribbean</Text>
+      {/* <Text style={styles.title}>Welcome to Taste of Caribbean</Text>
       <Text style={styles.subtitle}>Your Caribbean Food Adventure Starts Here!</Text>
-      <Text style={styles.text}>🌴 Loading... 🌴</Text>
+      <Text style={styles.text}>🌴 Loading... 🌴</Text> */}
+      <Menu />
     </View>
   );
 }
@@ -20,6 +22,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: '#f0f8ff',
     padding: 20,
+    paddingTop: 50,
   },
   title: {
     fontSize: 24,
