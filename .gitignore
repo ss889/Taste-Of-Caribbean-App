@@ -1,5 +1,6 @@
 # dependencies
 /node_modules
+/taste-of-the-caribbean-app/node_modules
 /.pnp
 .pnp.js
 
