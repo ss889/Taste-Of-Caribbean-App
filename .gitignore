@@ -1,6 +1,6 @@
 # dependencies
 /node_modules
-/taste-of-the-caribbean-app/node_modules
+/taste-of-the-caribbean-app/node_modules/react-native-reanimated/android/src/reactNativeVersionPatch/
 /.pnp
 .pnp.js
 
