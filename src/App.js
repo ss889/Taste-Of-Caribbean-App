@@ -4,23 +4,23 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { View, Text, StyleSheet, Image } from 'react-native';
 import HomeScreen from './components/home/Home';
 import LottieView from 'lottie-react-native';
+import LoginScreen from './pages/Login/Login';
+import RegisterScreen from './pages/Register/Register';
+import { AuthProvider } from './context/AuthContext';
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        {/* Initial Loading Screen */}
-        <Stack.Screen 
-          name="Loading" 
-          component={LoadingScreen} 
-          options={{ headerShown: false }}
-        />
-        {/* Main Home Screen */}
-        <Stack.Screen name="Home" component={HomeScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <AuthProvider>
+      <NavigationContainer>
+        <Stack.Navigator initialRouteName="Register">
+          <Stack.Screen name="Register" component={RegisterScreen} />
+          <Stack.Screen name="Login" component={LoginScreen} />
+          <Stack.Screen name="Home" component={HomeScreen} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </AuthProvider>
   );
 }
 

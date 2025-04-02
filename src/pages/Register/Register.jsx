@@ -2,22 +2,23 @@ import React, { useState, useContext } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 
-export default function LoginScreen({ navigation }) {
+export default function RegisterScreen({ navigation }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const { registrationData } = useContext(AuthContext); // Access context
+  const { setRegistrationData } = useContext(AuthContext); // Access context
 
-  const handleLogin = () => {
-    if (registrationData && username === registrationData.username && password === registrationData.password) {
-      navigation.navigate('Home', { userName: registrationData.username }); // Navigate to HomeScreen
+  const handleRegister = () => {
+    if (username && password) {
+      setRegistrationData({ username, password }); // Store registration data in context
+      navigation.replace('Login'); // Navigate to Login screen after registration
     } else {
-      Alert.alert('Login Failed', 'Invalid credentials. Please try again.');
+      Alert.alert('Error', 'Please fill in both fields to register.');
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Login</Text>
+      <Text style={styles.title}>Register</Text>
       <TextInput
         style={styles.input}
         placeholder="Username"
@@ -31,7 +32,7 @@ export default function LoginScreen({ navigation }) {
         value={password}
         onChangeText={setPassword}
       />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Register" onPress={handleRegister} />
     </View>
   );
 }
