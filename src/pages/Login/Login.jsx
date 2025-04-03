@@ -9,7 +9,7 @@ export default function LoginScreen({ navigation }) {
 
   const handleLogin = () => {
     if (username === inputUsername && password === inputPassword) {
-      navigation.navigate('HomeScreen', { userName: username }); // Navigate to HomeScreen
+      navigation.navigate('SuccessfulLogin', { userName: username }); // Navigate to SuccessfulLogin
     } else {
       Alert.alert('Login Failed', 'Invalid credentials. Please try again.');
     }

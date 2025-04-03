@@ -6,7 +6,7 @@ export default function SuccessfulLogin({ navigation, route }) {
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Home'); // Navigate to HomeScreen after delay
+      navigation.replace('HomeScreen'); // Navigate to HomeScreen after delay
     }, 2000);
     return () => clearTimeout(timer);
   }, [navigation]);

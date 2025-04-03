@@ -1,7 +1,21 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Image } from "react-native";
+import React, { useState, useContext } from "react";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Alert, Image } from "react-native";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function MyAccountScreen({ navigation }) {
+  const { username, password, setPassword } = useContext(AuthContext); // Access AuthContext
+  const [newPassword, setNewPassword] = useState("");
+
+  const handleChangePassword = () => {
+    if (newPassword.trim()) {
+      setPassword(newPassword); // Update password in context
+      Alert.alert("Success", "Your password has been updated.");
+      setNewPassword(""); // Clear the input field
+    } else {
+      Alert.alert("Error", "Password cannot be empty.");
+    }
+  };
+
   return (
     <View style={styles.container}>
       {/* Sidebar */}
@@ -13,8 +27,12 @@ export default function MyAccountScreen({ navigation }) {
           <Text style={styles.sidebarText}>🧑 Profile</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.sidebarItem}>
-          <Text style={styles.sidebarText}>🛡️ Security</Text>
+        {/* Logout Button */}
+        <TouchableOpacity
+          style={styles.sidebarItem}
+          onPress={() => navigation.navigate('Logout')} // Navigate to Logout screen
+        >
+          <Text style={styles.sidebarText}>🚪 Logout</Text>
         </TouchableOpacity>
 
         {/* Back Button */}
@@ -30,8 +48,33 @@ export default function MyAccountScreen({ navigation }) {
       <ScrollView style={styles.content} contentContainerStyle={styles.contentContainer}>
         <Text style={styles.sectionTitle}>Profile Details</Text>
 
+        {/* Username */}
+        <View style={styles.infoBlock}>
+          <Text style={styles.infoTitle}>Username</Text>
+          <Text style={styles.infoText}>{username || "Guest"}</Text>
+        </View>
+
+        <View style={styles.divider} />
+
+        {/* Change Password */}
+        <View style={styles.infoBlock}>
+          <Text style={styles.infoTitle}>Change Password</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Enter new password"
+            secureTextEntry
+            value={newPassword}
+            onChangeText={setNewPassword}
+          />
+          <TouchableOpacity style={styles.changePasswordButton} onPress={handleChangePassword}>
+            <Text style={styles.changePasswordButtonText}>Update Password</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={styles.divider} />
+
         {/* Profile Info */}
-        <View style={styles.profileHeader}>
+        {/* <View style={styles.profileHeader}>
           <Image source={{ uri: "https://via.placeholder.com/50" }} style={styles.avatar} />
           <View style={styles.profileInfo}>
             <Text style={styles.profileName}>Jaylon Dias</Text>
@@ -39,12 +82,12 @@ export default function MyAccountScreen({ navigation }) {
               <Text style={styles.editProfile}>Edit Profile</Text>
             </TouchableOpacity>
           </View>
-        </View>
+        </View> */}
 
-        <View style={styles.divider} />
+        {/* <View style={styles.divider} /> */}
 
         {/* Email Addresses */}
-        <View style={styles.infoBlock}>
+        {/* <View style={styles.infoBlock}>
           <Text style={styles.infoTitle}>Email Addresses</Text>
           <Text style={styles.infoText}>
             example@clerk.dev <Text style={styles.primaryLabel}>Primary</Text>
@@ -56,10 +99,10 @@ export default function MyAccountScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.divider} />
+        <View style={styles.divider} /> */}
 
         {/* Phone Number */}
-        <View style={styles.infoBlock}>
+        {/* <View style={styles.infoBlock}>
           <Text style={styles.infoTitle}>Phone Number</Text>
           <Text style={styles.infoText}>
             +1 (555) 123-4567 <Text style={styles.primaryLabel}>Primary</Text>
@@ -69,10 +112,10 @@ export default function MyAccountScreen({ navigation }) {
           </TouchableOpacity>
         </View>
 
-        <View style={styles.divider} />
+        <View style={styles.divider} /> */}
 
         {/* Connected Accounts */}
-        <View style={styles.infoBlock}>
+        {/* <View style={styles.infoBlock}>
           <Text style={styles.infoTitle}>Connected Accounts</Text>
           <View style={styles.accountRow}>
             <Text style={styles.infoText}>🔴 Google • example@email.com</Text>
@@ -80,7 +123,7 @@ export default function MyAccountScreen({ navigation }) {
           <TouchableOpacity>
             <Text style={styles.addLink}>+ Connect Account</Text>
           </TouchableOpacity>
-        </View>
+        </View> */}
       </ScrollView>
     </View>
   );
@@ -186,5 +229,22 @@ const styles = StyleSheet.create({
   accountRow: {
     flexDirection: "row",
     alignItems: "center",
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  changePasswordButton: {
+    backgroundColor: "#FF6B00",
+    padding: 10,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  changePasswordButtonText: {
+    color: "#fff",
+    fontWeight: "bold",
   },
 });

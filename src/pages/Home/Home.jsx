@@ -18,11 +18,6 @@ export default function HomeScreen({ userName = 'Guest', navigation }) {
       <Text style={styles.title}>🏝️ Welcome, {userName}! 🏝️</Text>
       <Text style={styles.subtitle}>Enjoy delicious Caribbean food 🍛</Text>
 
-      <Button
-        title="My Account"
-        onPress={() => navigation.navigate('MyAccountScreen')} // Navigate to MyAccountScreen
-      />
-
       {/* Bottom Navigation Bar */}
       <View style={styles.navbar}>
         {/* Navigation Items */}

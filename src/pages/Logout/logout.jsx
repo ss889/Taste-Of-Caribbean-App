@@ -4,7 +4,7 @@ import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
 export default function Logout({ navigation }) {
   useEffect(() => {
     const timer = setTimeout(() => {
-      navigation.replace('Login'); // Navigate back to Login screen after delay
+      navigation.replace('WelcomeScreen'); // Navigate back to WelcomeScreen after delay
     }, 2000);
     return () => clearTimeout(timer);
   }, [navigation]);
@@ -14,7 +14,7 @@ export default function Logout({ navigation }) {
       <Text style={styles.title}>👋 Logged Out Successfully</Text>
       <Text style={styles.subtitle}>See you next time!</Text>
       <ActivityIndicator size="large" color="#FF5733" style={styles.loader} />
-      <Text style={styles.loadingText}>Redirecting to Login...</Text>
+      <Text style={styles.loadingText}>Redirecting to Welcome Screen...</Text>
     </View>
   );
 }
