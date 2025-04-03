@@ -15,27 +15,22 @@ const WelcomeScreen = () => {
                     source={require('../../assets/pictures/toc-logo.png')} 
                 />
                 <Text style={styles.title}>Welcome To Taste of Caribbean</Text>
+                <Text style={styles.subtitle}>Your Caribbean Food Adventure Starts Here!</Text>
             </View>
             
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
                     style={[styles.button, styles.loginButton]}
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate('LoginScreen')} // Navigate to Login
                 >
                     <Text style={styles.buttonText}>Log In</Text>
                 </TouchableOpacity>
                 
                 <TouchableOpacity 
                     style={[styles.button, styles.signupButton]}
-                    onPress={() => navigation.navigate('SignUp')}
+                    onPress={() => navigation.navigate('RegisterScreen')} // Navigate to Register
                 >
                     <Text style={[styles.buttonText, styles.signupButtonText]}>Sign Up</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity 
-                    onPress={() => navigation.navigate('HomeScreen')} // Using replace instead of navigate
-                >
-                    <Text style={styles.guestText}>Continue as Guest</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -62,9 +57,15 @@ const styles = StyleSheet.create({
         marginTop: 20,
         color: '#333',
     },
+    subtitle: {
+        fontSize: 16,
+        color: 'gray',
+        marginBottom: 20,
+        textAlign: 'center',
+    },
     image: {
-        width: width*0.8,
-        height: height*0.2,
+        width: width * 0.8,
+        height: height * 0.2,
         resizeMode: 'contain',
     },
     buttonContainer: {
@@ -93,13 +94,6 @@ const styles = StyleSheet.create({
     },
     signupButtonText: {
         color: '#FF6B00',
-    },
-    guestText: {
-        color: '#FF6B00',
-        textAlign: 'center',
-        marginTop: 15,
-        fontSize: 14,
-        textDecorationLine: 'underline',
     },
 });
 

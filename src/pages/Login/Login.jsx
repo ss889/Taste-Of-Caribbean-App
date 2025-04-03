@@ -3,13 +3,13 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 
 export default function LoginScreen({ navigation }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { registrationData } = useContext(AuthContext); // Access context
+  const [inputUsername, setInputUsername] = useState('');
+  const [inputPassword, setInputPassword] = useState('');
+  const { username, password } = useContext(AuthContext); // Access context
 
   const handleLogin = () => {
-    if (registrationData && username === registrationData.username && password === registrationData.password) {
-      navigation.navigate('Home', { userName: registrationData.username }); // Navigate to HomeScreen
+    if (username === inputUsername && password === inputPassword) {
+      navigation.navigate('HomeScreen', { userName: username }); // Navigate to HomeScreen
     } else {
       Alert.alert('Login Failed', 'Invalid credentials. Please try again.');
     }
@@ -21,15 +21,15 @@ export default function LoginScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        value={inputUsername}
+        onChangeText={setInputUsername}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        value={inputPassword}
+        onChangeText={setInputPassword}
       />
       <Button title="Login" onPress={handleLogin} />
     </View>

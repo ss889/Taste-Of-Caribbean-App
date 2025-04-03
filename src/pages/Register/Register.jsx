@@ -3,14 +3,16 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { AuthContext } from '../../context/AuthContext';
 
 export default function RegisterScreen({ navigation }) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { setRegistrationData } = useContext(AuthContext); // Access context
+  const [localUsername, setLocalUsername] = useState('');
+  const [localPassword, setLocalPassword] = useState('');
+  const { setUsername, setPassword } = useContext(AuthContext); // Access context
 
   const handleRegister = () => {
-    if (username && password) {
-      setRegistrationData({ username, password }); // Store registration data in context
-      navigation.replace('Login'); // Navigate to Login screen after registration
+    if (localUsername && localPassword) {
+      setUsername(localUsername); // Save username in context
+      setPassword(localPassword); // Save password in context
+      Alert.alert('Registration Successful', `Welcome, ${localUsername}!`);
+      navigation.replace('WelcomeScreen'); // Navigate back to Welcome screen after registration
     } else {
       Alert.alert('Error', 'Please fill in both fields to register.');
     }
@@ -22,15 +24,15 @@ export default function RegisterScreen({ navigation }) {
       <TextInput
         style={styles.input}
         placeholder="Username"
-        value={username}
-        onChangeText={setUsername}
+        value={localUsername}
+        onChangeText={setLocalUsername}
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         secureTextEntry
-        value={password}
-        onChangeText={setPassword}
+        value={localPassword}
+        onChangeText={setLocalPassword}
       />
       <Button title="Register" onPress={handleRegister} />
     </View>
