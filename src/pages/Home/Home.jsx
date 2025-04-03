@@ -1,9 +1,16 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; // Import icons from Expo vector-icons
 
-export default function HomeScreen({ userName = 'Guest' }) {
+export default function HomeScreen({ userName = 'Guest', navigation }) {
   const [activeTab, setActiveTab] = useState('Home');
+
+  const handleTabPress = (tab) => {
+    setActiveTab(tab);
+    if (tab === 'Account') {
+      navigation.navigate('MyAccountScreen'); // Navigate to MyAccountScreen
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -11,10 +18,15 @@ export default function HomeScreen({ userName = 'Guest' }) {
       <Text style={styles.title}>🏝️ Welcome, {userName}! 🏝️</Text>
       <Text style={styles.subtitle}>Enjoy delicious Caribbean food 🍛</Text>
 
+      <Button
+        title="My Account"
+        onPress={() => navigation.navigate('MyAccountScreen')} // Navigate to MyAccountScreen
+      />
+
       {/* Bottom Navigation Bar */}
       <View style={styles.navbar}>
         {/* Navigation Items */}
-        <TouchableOpacity style={styles.navItem} onPress={() => setActiveTab('Home')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Home')}>
           <Ionicons
             name="home-outline"
             size={30}
@@ -23,7 +35,7 @@ export default function HomeScreen({ userName = 'Guest' }) {
           <Text style={[styles.navText, activeTab === 'Home' && styles.activeTab]}>Home</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => setActiveTab('Menu')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Menu')}>
           <Ionicons
             name="restaurant-outline"
             size={30}
@@ -32,7 +44,7 @@ export default function HomeScreen({ userName = 'Guest' }) {
           <Text style={[styles.navText, activeTab === 'Menu' && styles.activeTab]}>Menu</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => setActiveTab('Rewards')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Rewards')}>
           <Ionicons
             name="gift-outline"
             size={30}
@@ -41,7 +53,7 @@ export default function HomeScreen({ userName = 'Guest' }) {
           <Text style={[styles.navText, activeTab === 'Rewards' && styles.activeTab]}>Rewards</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => setActiveTab('Cart')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Cart')}>
           <Ionicons
             name="bag-outline"
             size={30}
@@ -50,7 +62,7 @@ export default function HomeScreen({ userName = 'Guest' }) {
           <Text style={[styles.navText, activeTab === 'Cart' && styles.activeTab]}>Cart</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => setActiveTab('Account')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Account')}>
           <Ionicons
             name="person-circle-outline"
             size={30}
