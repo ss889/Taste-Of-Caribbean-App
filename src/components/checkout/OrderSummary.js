@@ -23,6 +23,10 @@
 import React from 'react';
 import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 
+// Import food images
+const jerkChickenImage = require('../../assets/styles/images/jerk_chicken.png');
+const oxtailImage = require('../../assets/styles/images/oxtail.jpg');
+
 const OrderSummary = ({ orderItems, subtotal, tax, deliveryFee, total }) => {
   return (
     <View style={styles.container}>
@@ -33,9 +37,7 @@ const OrderSummary = ({ orderItems, subtotal, tax, deliveryFee, total }) => {
           <View key={index} style={styles.orderItem}>
             <View style={styles.imageContainer}>
               <Image 
-                source={item.name === "Jerk Chicken Plate" ? 
-                  require('../../assets/styles/images/jerk chicken.png') :
-                  require('../../assets/styles/images/oxtail.jpg')} 
+                source={item.name === "Jerk Chicken Plate" ? jerkChickenImage : oxtailImage} 
                 style={styles.image}
                 resizeMode="cover"
               />
