@@ -2,9 +2,13 @@
   "name": "taste-of-caribbean-app",
   "version": "1.0.0",
   "description": "A food ordering app inspired by Caribbean cuisine.",
-  "main": "index.js",
+  "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "expo start",
+    "android": "expo start --android",
+    "ios": "expo start --ios",
+    "web": "expo start --web"
   },
   "repository": {
     "type": "git",
@@ -18,7 +22,13 @@
   },
   "homepage": "https://github.com/ss889/Taste-Of-Caribbean-App#readme",
   "dependencies": {
-    "express": "^4.17.1",
-    "react": "^17.0.0"
+    "@react-navigation/native": "^6.1.9",
+    "@react-navigation/native-stack": "^6.9.17",
+    "expo": "~52.0.0",
+    "expo-status-bar": "~2.0.1",
+    "react": "18.3.1",
+    "react-native": "0.76.9",
+    "react-native-safe-area-context": "4.12.0",
+    "react-native-screens": "~4.4.0"
   }
 }
