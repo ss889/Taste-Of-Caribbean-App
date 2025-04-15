@@ -5,9 +5,8 @@ import { AuthContext } from '../../context/AuthContext';
 import styles from './Home.styles';
 
 export default function HomeScreen({ navigation }) {
-  const { user } = useContext(AuthContext); // ✅ Get user from context
-  const userName = user?.username || 'Guest'; // ✅ Use username or fallback
-
+  const { user } = useContext(AuthContext);
+  const userName = user?.username || 'Guest';
   const [activeTab, setActiveTab] = useState('Home');
   const tabs = [
     { key: 'Home', icon: 'home-outline', label: 'Home' },
@@ -20,7 +19,10 @@ export default function HomeScreen({ navigation }) {
   const handleTabPress = (tab) => {
     setActiveTab(tab);
     if (tab === 'Account') {
-      navigation.navigate('MyAccountScreen'); // Navigate to account screen
+      navigation.navigate('MyAccountScreen');
+    }
+    else if (tab === 'Rewards') {
+      navigation.navigate('RewardScreen');
     }
   };
 
@@ -31,7 +33,7 @@ export default function HomeScreen({ navigation }) {
 
       <View style={styles.navbarContainer}>
         {tabs.map((tab) => (
-          <TouchableOpacity key={tab.key} style={styles.navItem} onPress={() => onTabPress(tab.key)}>
+          <TouchableOpacity key={tab.key} style={styles.navItem} onPress={() => handleTabPress(tab.key)}>
             <Ionicons
               name={tab.icon}
               size={26}
