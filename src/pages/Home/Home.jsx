@@ -1,119 +1,48 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Button } from 'react-native';
-import { Ionicons } from '@expo/vector-icons'; // Import icons from Expo vector-icons
+import React, { useState, useContext } from 'react';
+import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
+import { AuthContext } from '../../context/AuthContext';
+import styles from './Home.styles';
 
-export default function HomeScreen({ userName = 'Guest', navigation }) {
+export default function HomeScreen({ navigation }) {
+  const { user } = useContext(AuthContext); // ✅ Get user from context
+  const userName = user?.username || 'Guest'; // ✅ Use username or fallback
+
   const [activeTab, setActiveTab] = useState('Home');
+  const tabs = [
+    { key: 'Home', icon: 'home-outline', label: 'Home' },
+    { key: 'Menu', icon: 'restaurant-outline', label: 'Menu' },
+    { key: 'Rewards', icon: 'gift-outline', label: 'Rewards' },
+    { key: 'Cart', icon: 'bag-outline', label: 'Cart' },
+    { key: 'Account', icon: 'person-circle-outline', label: 'Account' },
+  ];
 
   const handleTabPress = (tab) => {
     setActiveTab(tab);
     if (tab === 'Account') {
-      navigation.navigate('MyAccountScreen'); // Navigate to MyAccountScreen
+      navigation.navigate('MyAccountScreen'); // Navigate to account screen
     }
   };
 
   return (
     <View style={styles.container}>
-      {/* Main Content */}
       <Text style={styles.title}>🏝️ Welcome, {userName}! 🏝️</Text>
       <Text style={styles.subtitle}>Enjoy delicious Caribbean food 🍛</Text>
 
-      {/* Bottom Navigation Bar */}
-      <View style={styles.navbar}>
-        {/* Navigation Items */}
-        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Home')}>
-          <Ionicons
-            name="home-outline"
-            size={30}
-            color={activeTab === 'Home' ? '#FF5733' : 'black'}
-          />
-          <Text style={[styles.navText, activeTab === 'Home' && styles.activeTab]}>Home</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Menu')}>
-          <Ionicons
-            name="restaurant-outline"
-            size={30}
-            color={activeTab === 'Menu' ? '#FF5733' : 'black'}
-          />
-          <Text style={[styles.navText, activeTab === 'Menu' && styles.activeTab]}>Menu</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Rewards')}>
-          <Ionicons
-            name="gift-outline"
-            size={30}
-            color={activeTab === 'Rewards' ? '#FF5733' : 'black'}
-          />
-          <Text style={[styles.navText, activeTab === 'Rewards' && styles.activeTab]}>Rewards</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Cart')}>
-          <Ionicons
-            name="bag-outline"
-            size={30}
-            color={activeTab === 'Cart' ? '#FF5733' : 'black'}
-          />
-          <Text style={[styles.navText, activeTab === 'Cart' && styles.activeTab]}>Cart</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.navItem} onPress={() => handleTabPress('Account')}>
-          <Ionicons
-            name="person-circle-outline"
-            size={30}
-            color={activeTab === 'Account' ? '#FF5733' : 'black'}
-          />
-          <Text style={[styles.navText, activeTab === 'Account' && styles.activeTab]}>Account</Text>
-        </TouchableOpacity>
-        
+      <View style={styles.navbarContainer}>
+        {tabs.map((tab) => (
+          <TouchableOpacity key={tab.key} style={styles.navItem} onPress={() => onTabPress(tab.key)}>
+            <Ionicons
+              name={tab.icon}
+              size={26}
+              color={activeTab === tab.key ? '#FF5733' : '#333'}
+            />
+            <Text style={[styles.navText, activeTab === tab.key && styles.activeText]}>
+              {tab.label}
+            </Text>
+          </TouchableOpacity>
+        ))}
       </View>
     </View>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#f8f8f8',
-    paddingBottom: 80, // Allow space for the bottom navbar
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#666',
-  },
-  navbar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: '#fff',
-    borderTopWidth: 1,
-    borderTopColor: '#ddd',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    paddingVertical: 10,
-    elevation: 5, // Shadow for Android
-    shadowColor: '#000', // Shadow for iOS
-    shadowOffset: { width: 0, height: -2 },
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-  },
-  navItem: {
-    alignItems: 'center',
-  },
-  navText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: 'black',
-  },
-  activeTab: {
-    color: '#FF5733', // Active tab color
-  },
-});

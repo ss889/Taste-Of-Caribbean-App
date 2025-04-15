@@ -5,14 +5,13 @@ import { AuthContext } from '../../context/AuthContext';
 export default function RegisterScreen({ navigation }) {
   const [localUsername, setLocalUsername] = useState('');
   const [localPassword, setLocalPassword] = useState('');
-  const { setUsername, setPassword } = useContext(AuthContext); // Access context
+  const { setUser } = useContext(AuthContext); // Use setUser from context
 
   const handleRegister = () => {
     if (localUsername && localPassword) {
-      setUsername(localUsername); // Save username in context
-      setPassword(localPassword); // Save password in context
+      setUser({ username: localUsername, password: localPassword }); // Set full user object
       Alert.alert('Registration Successful', `Welcome, ${localUsername}!`);
-      navigation.replace('WelcomeScreen'); // Navigate back to Welcome screen after registration
+      navigation.replace('WelcomeScreen'); // Navigate to Welcome screen
     } else {
       Alert.alert('Error', 'Please fill in both fields to register.');
     }
