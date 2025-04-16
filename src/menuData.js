@@ -5,7 +5,7 @@ export const menuItems = [
     category: 'Main Dishes',
     price: '$12.99',
     description: 'Crispy fried fish topped with tangy pickled vegetables.',
-    image: require('../../assets/images/escovitch-fish.jpg')
+    image: '/assets/images/escovitch-fish.jpg'
   },
   {
     id: '2',
@@ -13,7 +13,7 @@ export const menuItems = [
     category: 'Main Dishes',
     price: '$14.99',
     description: 'Slow-cooked oxtail in a rich, flavorful gravy with butter beans.',
-    image: require('../../assets/images/oxtail-stew.jpg')
+    image: '/assets/images/oxtail-stew.jpg'
   },
   {
     id: '3',
@@ -21,7 +21,7 @@ export const menuItems = [
     category: 'Appetizers',
     price: '$4.99',
     description: 'Sweet and crispy fried plantains, a Caribbean favorite.',
-    image: require('../../assets/images/fried-plantains.jpg')
+    image: '/assets/images/fried-plantains.jpg'
   },
   {
     id: '4',
@@ -29,7 +29,7 @@ export const menuItems = [
     category: 'Drinks',
     price: '$6.99',
     description: 'A refreshing blend of rum, tropical juices, and a hint of spice.',
-    image: require('../../assets/images/rum punch.jpg')
+    image: '/assets/images/rum-punch.jpg'
   },
   {
     id: '5',
@@ -37,7 +37,7 @@ export const menuItems = [
     category: 'Drinks',
     price: '$6.99',
     description: 'A sweet holiday drink made using natural hibsicus leaves.',
-    image: require('../../assets/images/Sorrel.jpg')
+    image: '/assets/images/Sorrel.jpg'
   },
   {
     id: '6',
@@ -45,7 +45,7 @@ export const menuItems = [
     category: 'Main Dishes',
     price: '$13.99',
     description: 'Chicken Marinated authetnic Jamaican spices and cooked too perfection',
-    image: require('../../assets/images/JerkChicken.jpg')
+    image: '/assets/images/JerkChicken.jpg'
   },
   {
     id: '7',
@@ -53,7 +53,7 @@ export const menuItems = [
     category: 'Appetizers',
     price: '$3.99',
     description: 'A flaky savory pastry, filled with highly seasoned beef',
-    image: require('../../assets/images/BeefPatty.jpg')
+    image: '/assets/images/BeefPatty.jpg'
   },
   {
     id: '8',
@@ -61,6 +61,6 @@ export const menuItems = [
     category: 'Main Dishes',
     price: '$14.99',
     description: 'Tender, goat simmered in bold Jamaican curry spices, bursting with island heat',
-    image: require('../../assets/images/CurryGoat.jpg')
+    image: '/assets/images/CurryGoat.jpg'
   }
 ];

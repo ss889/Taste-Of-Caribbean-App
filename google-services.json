@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1034732460799",
+    "project_id": "toc-menu-data",
+    "storage_bucket": "toc-menu-data.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1034732460799:android:27f2c5c35e75e163614aca",
+        "android_client_info": {
+          "package_name": "com.TasteoftheCaribbean.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPD9aOi7WH6ZjB7nRQzU5u7FNzlIqLHE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
