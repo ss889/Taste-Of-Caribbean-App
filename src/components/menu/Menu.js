@@ -1,21 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 
-const Menu = () => {
+const Menu = ({ menuItems, addToCart }) => {
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   const categories = ['All', 'Appetizers', 'Main Dishes', 'Drinks'];
-  const menuItems = [
-    { id: '1', name: 'Escovitch Fish', category: 'Main Dishes', price: '$12.99', description: 'Crispy fried fish topped with tangy pickled vegetables.', image: require('../../assets/images/escovitch-fish.jpg') },
-    { id: '2', name: 'Oxtail Stew', category: 'Main Dishes', price: '$14.99', description: 'Slow-cooked oxtail in a rich, flavorful gravy with butter beans.', image: require('../../assets/images/oxtail-stew.jpg') },
-    { id: '3', name: 'Fried Plantains', category: 'Appetizers', price: '$4.99', description: 'Sweet and crispy fried plantains, a Caribbean favorite.', image: require('../../assets/images/fried-plantains.jpg') },
-    { id: '4', name: 'Rum Punch', category: 'Drinks', price: '$6.99', description: 'A refreshing blend of rum, tropical juices, and a hint of spice.', image: require('../../assets/images/rum punch.jpg') },
-    { id: '5', name: 'Sorrel', category: 'Drinks', price: '$6.99', description: 'A sweet holiday drink made using natural hibsicus leaves.', image: require('../../assets/images/Sorrel.jpg') },
-    { id: '6', name: 'Jerk Chicken', category: 'Main Dishes', price: '$13.99', description: 'Chicken Marinated authetnic Jamaican spices and cooked too perfection', image: require('../../assets/images/JerkChicken.jpg') },
-    { id: '7', name: 'Beef Patty', category: 'Appetizers', price: '$3.99', description: 'A flaky savory pastry, filled with highly seasoned beef', image: require('../../assets/images/BeefPatty.jpg') },
-    { id: '8', name: 'Curry Goat', category: 'Main Dishes', price: '$14.99', description: 'Tender, goat simmered in bold Jamaican curry spices, bursting with island heat', image: require('../../assets/images/CurryGoat.jpg') },
-
-  ];
 
   const filteredItems = selectedCategory === 'All'
     ? menuItems
@@ -42,9 +31,9 @@ const Menu = () => {
     <View style={styles.card}>
       <Image source={item.image} style={styles.image} />
       <Text style={styles.itemName}>{item.name}</Text>
-      <Text style={styles.itemPrice}>{item.price}</Text>
+      <Text style={styles.itemPrice}>${item.price.toFixed(2)}</Text>
       <Text style={styles.itemDescription}>{item.description}</Text>
-      <TouchableOpacity style={styles.addToCartButton}>
+      <TouchableOpacity style={styles.addToCartButton} onPress={() => addToCart(item)}>
         <Text style={styles.addToCartText}>Add to Cart</Text>
       </TouchableOpacity>
     </View>
@@ -59,7 +48,7 @@ const Menu = () => {
         keyExtractor={item => item.id}
         renderItem={renderItem}
         numColumns={2}
-        columnWrapperStyle={styles.row}
+        contentContainerStyle={styles.flatListContent}
       />
     </View>
   );
@@ -69,83 +58,93 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#f8f8f8',
-    padding: 10,
+    paddingTop: 20,
+    paddingHorizontal: 10,
   },
   title: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
-    textAlign: 'center',
+    alignSelf: 'center',
     color: '#2c3e50',
   },
   categoryContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginBottom: 10,
+    marginBottom: 15,
+    flexWrap: 'wrap',
   },
   categoryButton: {
-    padding: 10,
-    marginHorizontal: 5,
-    backgroundColor: '#ecf0f1',
+    backgroundColor: '#e0e0e0',
     borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    marginHorizontal: 5,
+    marginBottom: 8,
   },
   selectedCategoryButton: {
-    backgroundColor: '#3498db',
+    backgroundColor: '#ffb300',
   },
   categoryText: {
-    color: '#2c3e50',
-    fontWeight: 'bold',
-  },
-  row: {
-    justifyContent: 'space-between',
+    fontSize: 16,
+    color: '#333',
   },
   card: {
-    flex: 1,
-    margin: 5,
-    backgroundColor: '#ffffff',
-    borderRadius: 8,
+    backgroundColor: '#fff',
+    borderRadius: 12,
     padding: 10,
+    margin: 8,
+    flex: 1,
     alignItems: 'center',
+    elevation: 3,
     shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    elevation: 2,
   },
   image: {
     width: 100,
     height: 100,
     borderRadius: 8,
-    marginBottom: 10,
+    marginBottom: 8,
   },
   itemName: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: 'bold',
-    color: '#34495e',
+    marginBottom: 4,
+    color: '#222',
+    textAlign: 'center',
   },
   itemPrice: {
-    fontSize: 14,
-    color: '#7f8c8d',
-    marginBottom: 5,
+    fontSize: 16,
+    color: '#388e3c',
+    marginBottom: 4,
+    textAlign: 'center',
   },
   itemDescription: {
     fontSize: 14,
-    color: '#7f8c8d',
-    marginBottom: 10,
+    color: '#666',
+    marginBottom: 8,
     textAlign: 'center',
   },
   addToCartButton: {
-    backgroundColor: '#3498db',
-    padding: 8,
-    borderRadius: 5,
+    backgroundColor: '#ffb300',
+    borderRadius: 20,
+    paddingVertical: 6,
+    paddingHorizontal: 16,
+    marginTop: 4,
   },
   addToCartText: {
-    color: '#ffffff',
+    color: '#fff',
     fontWeight: 'bold',
+    fontSize: 16,
+  },
+  flatListContent: {
+    paddingBottom: 30,
   },
 });
 
 export default Menu;
-
 
 /**
  * Menu Page
