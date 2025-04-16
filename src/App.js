@@ -1,44 +1,51 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
-import Menu from './components/menu/Menu';
+import { SafeAreaView, ScrollView, StyleSheet } from 'react-native';
+import OrderSummary from './components/checkout/OrderSummary';
+
+// Sample data
+const sampleOrderItems = [
+  {
+    name: "Jerk Chicken Plate",
+    description: "Spicy jerk chicken with rice and peas",
+    price: 12.99,
+    quantity: 2,
+    customizations: ["Extra Spicy", "Extra Sauce"]
+  },
+  {
+    name: "Oxtail Stew",
+    description: "Slow-cooked oxtail with butter beans",
+    price: 15.99,
+    quantity: 1,
+    customizations: ["Add Plantains"]
+  }
+];
+
+const subtotal = sampleOrderItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+const tax = subtotal * 0.08;
+const deliveryFee = 3.99;
+const total = subtotal + tax + deliveryFee;
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="auto" />
-      {/* <Text style={styles.title}>Welcome to Taste of Caribbean</Text>
-      <Text style={styles.subtitle}>Your Caribbean Food Adventure Starts Here!</Text>
-      <Text style={styles.text}>🌴 Loading... 🌴</Text> */}
-      <Menu />
-    </View>
+    <SafeAreaView style={styles.container}>
+      <ScrollView>
+        <OrderSummary
+          orderItems={sampleOrderItems}
+          subtotal={subtotal}
+          tax={tax}
+          deliveryFee={deliveryFee}
+          total={total}
+        />
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#f0f8ff',
-    padding: 20,
-    paddingTop: 50,
-  },
-  title: {
-    fontSize: 24,
-    fontWeight: 'bold',
-    color: '#2c3e50',
-    marginBottom: 10,
-    textAlign: 'center',
-  },
-  subtitle: {
-    fontSize: 18,
-    color: '#34495e',
-    marginBottom: 20,
-    textAlign: 'center',
-  },
-  text: {
-    fontSize: 20,
-    color: '#3498db',
   },
 });
