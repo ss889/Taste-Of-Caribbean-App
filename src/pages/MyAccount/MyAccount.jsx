@@ -3,18 +3,20 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Alert,
 import { AuthContext } from "../../context/AuthContext";
 
 export default function MyAccountScreen({ navigation }) {
-  const { username, password, setPassword } = useContext(AuthContext); // Access AuthContext
+  const { user, setUser } = useContext(AuthContext);
   const [newPassword, setNewPassword] = useState("");
 
   const handleChangePassword = () => {
     if (newPassword.trim()) {
-      setPassword(newPassword); // Update password in context
+      // Update user object
+      setUser({ ...user, password: newPassword });
       Alert.alert("Success", "Your password has been updated.");
-      setNewPassword(""); // Clear the input field
+      setNewPassword("");
     } else {
       Alert.alert("Error", "Password cannot be empty.");
     }
   };
+
 
   return (
     <View style={styles.container}>
@@ -51,7 +53,7 @@ export default function MyAccountScreen({ navigation }) {
         {/* Username */}
         <View style={styles.infoBlock}>
           <Text style={styles.infoTitle}>Username</Text>
-          <Text style={styles.infoText}>{username || "Guest"}</Text>
+          <Text style={styles.infoText}>{user?.username || "Guest"}</Text>
         </View>
 
         <View style={styles.divider} />

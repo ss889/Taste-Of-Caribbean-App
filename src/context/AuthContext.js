@@ -1,14 +1,22 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState, useEffect } from 'react';
 
 export const AuthContext = createContext();
 
-export function AuthProvider({ children }) {
-  const [username, setUsername] = useState(null);
-  const [password, setPassword] = useState(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  useEffect(() => {
+    const checkUser = async () => {
+      await new Promise(resolve => setTimeout(resolve, 1500)); 
+      setUser(null);
+      setIsLoading(false);
+    };
+    checkUser();
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ username, setUsername, password, setPassword }}>
+    <AuthContext.Provider value={{ user, setUser, isLoading }}>
       {children}
     </AuthContext.Provider>
   );
-}
+};
