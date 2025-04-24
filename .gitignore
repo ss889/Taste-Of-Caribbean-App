@@ -26,3 +26,8 @@ yarn-error.log*
 .vscode
 *.swp
 *.swo
+
+# Config files with secrets
+app.config.js
+src/config/firebase.config.js
+google-services.json

@@ -2,15 +2,7 @@ const { initializeApp } = require('firebase/app');
 const { getFirestore, collection, getDocs, updateDoc, doc } = require('firebase/firestore');
 const { getStorage, ref, uploadBytes, getDownloadURL } = require('firebase/storage');
 
-const firebaseConfig = {
-  // Your Firebase config here - replace with your actual config
-  apiKey: "AIzaSyBxB3Wd8_JRBxVl7gF_5qKGBNtJ0W4oQgI",
-  authDomain: "taste-of-caribbean.firebaseapp.com",
-  projectId: "taste-of-caribbean",
-  storageBucket: "taste-of-caribbean.appspot.com",
-  messagingSenderId: "1027966651549",
-  appId: "1:1027966651549:web:b0f0c7c1d4a58ced7f0a7e"
-};
+const { firebaseConfig } = require('../config/firebase.config');
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
