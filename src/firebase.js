@@ -3,11 +3,11 @@ import { getFirestore } from 'firebase/firestore';
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAPD9aOi7WH6ZjB7nRQzU5u7FNzlIqLHE0",
-  projectId: "toc-menu-data",
-  storageBucket: "toc-menu-data.firebasestorage.app",
-  messagingSenderId: "1034732460799",
-  appId: "1:1034732460799:android:27f2c5c35e75e163614aca"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 // Initialize Firebase
