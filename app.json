@@ -4,10 +4,10 @@
     "slug": "taste-of-caribbean-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": null,
     "userInterfaceStyle": "light",
     "splash": {
-      "image": "./assets/splash.png",
+      "image": null,
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -15,17 +15,31 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier":"com.galaxies.firebase",
+      "googleServicesFile": "./GoogleService-Info.plist"
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": null,
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package":"com.galaxies.firebase",
+      "googleServicesFile": "./google-services.json"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": null
     },
-    "sdkVersion": "52.0.0"
+    "sdkVersion": "52.0.0",
+    "plugins": [
+      "expo-router",
+      ["expo-build-properties",{
+        "ios":{
+          "useFrameworks": "static"
+        }
+      }],
+      "@react-native-firebase/app",
+      "@react-native-firebase/auth"
+    ]
   }
 }
