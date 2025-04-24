@@ -1,201 +1,256 @@
-/**
- * Checkout Page
- * 
- * What this file does:
- * - Shows all items in the cart
- * - Calculates the total price
- * - Handles payment and delivery info
- * - Processes the order
- * 
- * Components needed:
- * - Order summary list
- * - Payment form
- * - Delivery address form
- * 
- * Features to add:
- * 1. List of items in cart
- * 2. Total price calculator
- * 3. Payment method selector
- * 4. Delivery address form
- * 5. Place order button
- */
-// OrderSummary.js
 import React from 'react';
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-// Import food images
-const jerkChickenImage = require('../../assets/styles/images/jerk_chicken.png');
-const oxtailImage = require('../../assets/styles/images/oxtail.jpg');
+const OrderSummary = ({ items, subtotal, tax, deliveryFee, total, onIncrease, onDecrease }) => {
+  if (items.length === 0) {
+    return (
+      <View style={styles.emptyContainer}>
+        <Text style={styles.emptyText}>Your cart is empty</Text>
+        <Text style={styles.emptySubtext}>Add some delicious items to get started!</Text>
+      </View>
+    );
+  }
 
-const OrderSummary = ({ orderItems, subtotal, tax, deliveryFee, total }) => {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Order Summary</Text>
-      
-      <View style={styles.itemsContainer}>
-        {orderItems.map((item, index) => (
-          <View key={index} style={styles.orderItem}>
-            <View style={styles.imageContainer}>
-              <Image 
-                source={item.name === "Jerk Chicken Plate" ? jerkChickenImage : oxtailImage} 
-                style={styles.image}
-                resizeMode="cover"
-              />
-            </View>
-            <View style={styles.itemDetails}>
-              <Text style={styles.itemName}>{item.name}</Text>
-              <Text style={styles.itemDescription}>{item.description}</Text>
-              <View style={styles.customizationContainer}>
-                {item.customizations && item.customizations.map((custom, idx) => (
-                  <View key={idx} style={styles.customizationTag}>
-                    <Text style={styles.customizationText}>{custom}</Text>
+      <ScrollView style={styles.itemList}>
+        {items.map((item) => (
+          <View key={item.id} style={styles.item}>
+            <View style={styles.itemHeader}>
+              <View style={styles.imageContainer}>
+                {item.imageUrl ? (
+                  <Image source={{ uri: item.imageUrl }} style={styles.image} resizeMode="cover" />
+                ) : (
+                  <View style={[styles.image, styles.placeholderImage]}>
+                    <Text style={styles.placeholderText}>{item.name[0]}</Text>
                   </View>
-                ))}
+                )}
               </View>
+              <View style={styles.itemInfo}>
+                <Text style={styles.itemName}>{item.name}</Text>
+                <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
+              </View>
+              <Text style={styles.itemPrice}>
+                ${(typeof item.price === 'number' ? item.price * item.quantity : parseFloat(item.price.replace('$', '')) * item.quantity).toFixed(2)}
+              </Text>
             </View>
-            <View style={styles.priceContainer}>
-              <Text style={styles.quantity}>x{item.quantity}</Text>
-              <Text style={styles.price}>${item.price.toFixed(2)}</Text>
+            <View style={styles.itemFooter}>
+              <View style={styles.quantity}>
+                <TouchableOpacity onPress={() => onDecrease(item.id)} style={[styles.quantityButton, item.quantity === 1 && styles.quantityButtonDisabled]}>
+                  <Text style={[styles.quantityButtonText, item.quantity === 1 && styles.quantityButtonTextDisabled]}>-</Text>
+                </TouchableOpacity>
+                <Text style={styles.quantityText}>{item.quantity}</Text>
+                <TouchableOpacity onPress={() => onIncrease(item.id)} style={styles.quantityButton}>
+                  <Text style={styles.quantityButtonText}>+</Text>
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.itemUnitPrice}>
+                ${typeof item.price === 'number' ? item.price.toFixed(2) : item.price.replace('$', '')} each
+              </Text>
             </View>
           </View>
         ))}
-      </View>
+      </ScrollView>
 
-      <View style={styles.summaryContainer}>
+      <View style={styles.summary}>
         <View style={styles.summaryRow}>
-          <Text>Subtotal</Text>
-          <Text>${subtotal.toFixed(2)}</Text>
+          <Text style={styles.summaryLabel}>Subtotal</Text>
+          <Text style={styles.summaryValue}>${subtotal.toFixed(2)}</Text>
         </View>
         <View style={styles.summaryRow}>
-          <Text>Tax</Text>
-          <Text>${tax.toFixed(2)}</Text>
+          <Text style={styles.summaryLabel}>Tax (13%)</Text>
+          <Text style={styles.summaryValue}>${tax.toFixed(2)}</Text>
         </View>
         <View style={styles.summaryRow}>
-          <Text>Delivery Fee</Text>
-          <Text>${deliveryFee.toFixed(2)}</Text>
+          <Text style={styles.summaryLabel}>Delivery Fee</Text>
+          <Text style={styles.summaryValue}>${deliveryFee.toFixed(2)}</Text>
         </View>
         <View style={[styles.summaryRow, styles.totalRow]}>
-          <Text style={styles.totalText}>Total</Text>
-          <Text style={styles.totalText}>${total.toFixed(2)}</Text>
+          <Text style={styles.totalLabel}>Total</Text>
+          <Text style={styles.totalValue}>${total.toFixed(2)}</Text>
         </View>
-      </View>
 
-      <TouchableOpacity style={styles.checkoutButton}>
-        <Text style={styles.buttonText}>Proceed to Checkout</Text>
-      </TouchableOpacity>
+        <TouchableOpacity style={styles.checkoutButton}>
+          <Text style={styles.checkoutButtonText}>Place Order</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    padding: 16,
+    flex: 1,
     backgroundColor: '#fff',
-    borderRadius: 8,
-    margin: 16,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 2,
+    paddingTop: 16,
   },
   title: {
-    fontSize: 22,
-    fontWeight: 'bold',
+    fontSize: 24,
+    fontWeight: '600',
     marginBottom: 16,
-    color: '#333',
+    paddingHorizontal: 16,
+    color: '#2e8b57',
   },
-  itemsContainer: {
-    marginBottom: 16,
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
+    padding: 32,
   },
-  orderItem: {
-    flexDirection: 'row',
-    paddingVertical: 12,
+  emptyText: {
+    fontSize: 20,
+    fontWeight: '600',
+    color: '#2e8b57',
+    marginBottom: 8,
+  },
+  emptySubtext: {
+    fontSize: 16,
+    color: '#666',
+    textAlign: 'center',
+  },
+  itemList: {
+    flex: 1,
+  },
+  item: {
+    padding: 16,
     borderBottomWidth: 1,
-    borderBottomColor: '#f0f0f0',
+    borderBottomColor: '#eee',
+  },
+  itemHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 12,
   },
   imageContainer: {
-    width: 80,
-    height: 80,
+    width: 60,
+    height: 60,
     marginRight: 12,
     borderRadius: 8,
     overflow: 'hidden',
+    backgroundColor: '#f0f8f4',
   },
   image: {
     width: '100%',
     height: '100%',
   },
-  itemDetails: {
-    flex: 1,
+  placeholderImage: {
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    fontSize: 24,
+    color: '#2e8b57',
+    fontWeight: '600',
+  },
+  itemInfo: {
+    flex: 1,
+    marginRight: 16,
   },
   itemName: {
-    fontWeight: '600',
     fontSize: 16,
+    fontWeight: '600',
     marginBottom: 4,
+    color: '#2e8b57',
   },
-  itemDescription: {
-    color: '#666',
+  itemQuantity: {
     fontSize: 14,
-    marginBottom: 4,
+    color: '#666',
   },
-  customizationContainer: {
+  itemPrice: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#2e8b57',
+  },
+  itemFooter: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-  },
-  customizationTag: {
-    backgroundColor: '#e8f4ff',
-    paddingHorizontal: 8,
-    paddingVertical: 2,
-    borderRadius: 10,
-    marginRight: 4,
-    marginBottom: 4,
-  },
-  customizationText: {
-    color: '#4a90e2',
-    fontSize: 12,
-  },
-  priceContainer: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    width: 70,
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   quantity: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f0f8f4',
+    borderRadius: 20,
+    paddingHorizontal: 8,
+  },
+  quantityButton: {
+    padding: 8,
+  },
+  quantityButtonDisabled: {
+    opacity: 0.5,
+  },
+  quantityButtonText: {
+    fontSize: 18,
+    color: '#2e8b57',
+    width: 18,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  quantityButtonTextDisabled: {
+    color: '#999',
+  },
+  quantityText: {
+    fontSize: 16,
+    marginHorizontal: 12,
+    minWidth: 24,
+    textAlign: 'center',
+    color: '#2e8b57',
+    fontWeight: '600',
+  },
+  itemUnitPrice: {
+    fontSize: 14,
     color: '#666',
-    marginBottom: 4,
   },
-  price: {
-    fontWeight: 'bold',
-  },
-  summaryContainer: {
-    marginTop: 16,
+  summary: {
+    padding: 16,
+    backgroundColor: '#fff',
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
   },
   summaryRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    paddingVertical: 6,
+    marginBottom: 12,
+  },
+  summaryLabel: {
+    fontSize: 15,
+    color: '#666',
+  },
+  summaryValue: {
+    fontSize: 15,
+    color: '#2e8b57',
+    fontWeight: '500',
   },
   totalRow: {
+    marginTop: 12,
+    paddingTop: 12,
     borderTopWidth: 1,
     borderTopColor: '#eee',
-    marginTop: 8,
-    paddingTop: 8,
   },
-  totalText: {
-    fontWeight: 'bold',
+  totalLabel: {
     fontSize: 18,
+    fontWeight: '600',
+    color: '#2e8b57',
+  },
+  totalValue: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#2e8b57',
   },
   checkoutButton: {
-    backgroundColor: '#f57c00',
-    paddingVertical: 14,
-    borderRadius: 6,
+    backgroundColor: '#2e8b57',
+    borderRadius: 25,
+    padding: 16,
     alignItems: 'center',
     marginTop: 20,
+    marginHorizontal: 16,
   },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
+  checkoutButtonText: {
+    color: '#fff',
+    fontSize: 18,
+    fontWeight: '600',
   },
 });
 

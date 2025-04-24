@@ -21,17 +21,17 @@
  */
 
 import React, { useState } from 'react';
-import { View, Text, FlatList, StyleSheet, ActivityIndicator } from 'react-native';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 import { useMenu } from '../../hooks/useMenu.js';
 
-export const Menu = () => {
+const Menu = ({ addToCart }) => {
   const { menuItems, loading, error } = useMenu();
   const [selectedCategory, setSelectedCategory] = useState('All');
 
   if (loading) {
     return (
       <View style={styles.centered}>
-        <ActivityIndicator size="large" />
+        <Text>Loading menu...</Text>
       </View>
     );
   }
@@ -39,50 +39,65 @@ export const Menu = () => {
   if (error) {
     return (
       <View style={styles.centered}>
-        <Text>Error loading menu: {error.message}</Text>
+        <Text>Error: {error.message}</Text>
       </View>
     );
   }
 
   const categories = ['All', ...new Set(menuItems.map(item => item.category))];
-  const filteredItems = selectedCategory === 'All' 
-    ? menuItems 
+  const filteredItems = selectedCategory === 'All'
+    ? menuItems
     : menuItems.filter(item => item.category === selectedCategory);
 
   const renderItem = ({ item }) => (
     <View style={styles.card}>
-      <Text style={styles.name}>{item.name}</Text>
-      <Text style={styles.price}>{item.price}</Text>
-      <Text style={styles.description}>{item.description}</Text>
+      <View style={styles.imageContainer}>
+        {item.imageUrl ? (
+          <Image source={{ uri: item.imageUrl }} style={styles.image} />
+        ) : (
+          <View style={[styles.image, styles.placeholderImage]}>
+            <Text style={styles.placeholderText}>{item.name[0]}</Text>
+          </View>
+        )}
+      </View>
+      <View style={styles.cardContent}>
+        <Text style={styles.itemName}>{item.name}</Text>
+        <Text style={styles.itemPrice}>${typeof item.price === 'number' ? item.price.toFixed(2) : item.price.replace('$', '')}</Text>
+        <Text style={styles.itemDescription}>{item.description}</Text>
+        <TouchableOpacity 
+          style={styles.addToCartButton}
+          onPress={() => addToCart(item)}
+        >
+          <Text style={styles.addToCartText}>Add to Cart</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 
   return (
     <View style={styles.container}>
-      <FlatList
-        horizontal
-        data={categories}
-        renderItem={({ item }) => (
-          <Text 
-            style={[
-              styles.category,
-              selectedCategory === item && styles.selectedCategory
-            ]}
-            onPress={() => setSelectedCategory(item)}
-          >
-            {item}
-          </Text>
-        )}
-        keyExtractor={item => item}
-        style={styles.categories}
-      />
-      
+      <View style={styles.header}>
+        <Text style={styles.title}>Menu</Text>
+        <View style={styles.categories}>
+          {categories.map(category => (
+            <TouchableOpacity
+              key={category}
+              style={[styles.categoryButton, selectedCategory === category && styles.selectedCategory]}
+              onPress={() => setSelectedCategory(category)}
+            >
+              <Text style={[styles.categoryText, selectedCategory === category && styles.selectedCategoryText]}>
+                {category}
+              </Text>
+            </TouchableOpacity>
+          ))}
+        </View>
+      </View>
       <FlatList
         data={filteredItems}
         renderItem={renderItem}
         keyExtractor={item => item.id}
         numColumns={2}
-        style={styles.grid}
+        contentContainerStyle={styles.menuList}
       />
     </View>
   );
@@ -91,56 +106,108 @@ export const Menu = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 10,
+    backgroundColor: '#fff',
   },
   centered: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
   },
-  categories: {
-    marginBottom: 10,
+  header: {
+    padding: 16,
+    backgroundColor: '#fff',
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
   },
-  category: {
-    padding: 8,
-    marginRight: 10,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  categories: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  categoryButton: {
+    paddingHorizontal: 16,
+    paddingVertical: 8,
     borderRadius: 20,
-    backgroundColor: '#f0f0f0',
+    backgroundColor: '#f5f5f5',
   },
   selectedCategory: {
-    backgroundColor: '#007AFF',
-    color: 'white',
+    backgroundColor: '#ffb300',
   },
-  grid: {
-    flex: 1,
+  categoryText: {
+    color: '#666',
+  },
+  selectedCategoryText: {
+    color: '#fff',
+    fontWeight: '500',
+  },
+  menuList: {
+    padding: 8,
   },
   card: {
     flex: 1,
-    margin: 5,
-    padding: 10,
-    backgroundColor: 'white',
-    borderRadius: 10,
+    margin: 8,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    overflow: 'hidden',
+    elevation: 2,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
   },
-  name: {
-    fontSize: 16,
-    fontWeight: 'bold',
-    marginBottom: 5,
+  addToCartButton: {
+    backgroundColor: '#2e8b57',
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 20,
+    alignItems: 'center',
+    marginTop: 8,
   },
-  price: {
+  addToCartText: {
+    color: '#fff',
     fontSize: 14,
-    color: '#007AFF',
-    marginBottom: 5,
+    fontWeight: '500',
   },
-  description: {
+  imageContainer: {
+    height: 120,
+    backgroundColor: '#f5f5f5',
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+  placeholderImage: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  placeholderText: {
+    fontSize: 32,
+    color: '#ccc',
+  },
+  cardContent: {
+    padding: 12,
+  },
+  itemName: {
+    fontSize: 16,
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  itemPrice: {
+    fontSize: 14,
+    color: '#ffb300',
+    fontWeight: '500',
+    marginBottom: 4,
+  },
+  itemDescription: {
     fontSize: 12,
     color: '#666',
+    marginBottom: 8,
   },
 });
+
+export default Menu;

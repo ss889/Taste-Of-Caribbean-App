@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "A food ordering app inspired by Caribbean cuisine.",
   "main": "node_modules/expo/AppEntry.js",
-  "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "expo start",
@@ -25,6 +24,7 @@
   "dependencies": {
     "@react-native-firebase/app": "^21.14.0",
     "@react-native-firebase/firestore": "^21.14.0",
+    "@react-native-firebase/storage": "^21.14.0",
     "@react-navigation/native": "^6.1.9",
     "@react-navigation/native-stack": "^6.9.17",
     "expo": "~52.0.0",
