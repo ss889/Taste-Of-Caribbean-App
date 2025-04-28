@@ -19,7 +19,7 @@
  * 4. Special offers of the day
  * 5. Quick order buttons
  */
-import HomeScreen from '../../pages/Home/Home.jsx';
+import HomeScreen from '../../screens/Home/Home.jsx';
 
 export default HomeScreen;
 

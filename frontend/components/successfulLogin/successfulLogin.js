@@ -17,6 +17,6 @@
  * 3. More transition animations
  */
 
-import SuccessfulLogin from '../../pages/successfulLogin/SuccessfulLogin';
+import SuccessfulLogin from '../../screens/Home/successfulLogin/SuccessfulLogin';
 
 export default SuccessfulLogin;

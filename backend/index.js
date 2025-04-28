@@ -2,7 +2,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-import authRoutes from './authRoutes.js';
+import appRoutes from './routes/appRoutes.js';
 
 dotenv.config();
 
@@ -11,7 +11,8 @@ const PORT = process.env.SERVER_PORT || 5000;
 
 app.use(cors());
 app.use(express.json());
-app.use('/api', authRoutes);
+app.use('/api', appRoutes);
+
 
 app.get('/health', (req, res) => {
   res.status(200).json({ message: 'Server is running and connected to the database.' });

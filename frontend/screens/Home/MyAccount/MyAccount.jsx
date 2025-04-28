@@ -1,6 +1,8 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Alert, Image } from "react-native";
-import { AuthContext } from "../../context/AuthContext";
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Alert } from "react-native";
+import { signOut } from 'firebase/auth'; // <-- imported correctly
+import { auth } from '../../../services/firebaseConfig'; // <-- imported correctly
+import { AuthContext } from "../../../context/AuthContext";
 
 export default function MyAccountScreen({ navigation }) {
   const { user, setUser } = useContext(AuthContext);
@@ -8,7 +10,6 @@ export default function MyAccountScreen({ navigation }) {
 
   const handleChangePassword = () => {
     if (newPassword.trim()) {
-      // Update user object
       setUser({ ...user, password: newPassword });
       Alert.alert("Success", "Your password has been updated.");
       setNewPassword("");
@@ -17,6 +18,21 @@ export default function MyAccountScreen({ navigation }) {
     }
   };
 
+  const handleLogout = async () => {
+    console.log('Logout button pressed');
+    try {
+      console.log('Signing out from Firebase...');
+      await signOut(auth);
+      console.log('Signed out from Firebase successfully');
+
+      console.log('Clearing app user...');
+      setUser(null);
+      console.log('Cleared user — AppNav will now automatically switch to WelcomeScreen!');
+      // ❌ NO navigation.navigate('WelcomeScreen')
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -32,7 +48,7 @@ export default function MyAccountScreen({ navigation }) {
         {/* Logout Button */}
         <TouchableOpacity
           style={styles.sidebarItem}
-          onPress={() => navigation.navigate('Logout')} // Navigate to Logout screen
+          onPress={handleLogout}
         >
           <Text style={styles.sidebarText}>🚪 Logout</Text>
         </TouchableOpacity>
@@ -40,7 +56,7 @@ export default function MyAccountScreen({ navigation }) {
         {/* Back Button */}
         <TouchableOpacity
           style={styles.sidebarItem}
-          onPress={() => navigation.goBack()} // Navigate back to the previous screen
+          onPress={() => navigation.goBack()}
         >
           <Text style={styles.sidebarText}>⬅️ Back</Text>
         </TouchableOpacity>
@@ -74,58 +90,6 @@ export default function MyAccountScreen({ navigation }) {
         </View>
 
         <View style={styles.divider} />
-
-        {/* Profile Info */}
-        {/* <View style={styles.profileHeader}>
-          <Image source={{ uri: "https://via.placeholder.com/50" }} style={styles.avatar} />
-          <View style={styles.profileInfo}>
-            <Text style={styles.profileName}>Jaylon Dias</Text>
-            <TouchableOpacity>
-              <Text style={styles.editProfile}>Edit Profile</Text>
-            </TouchableOpacity>
-          </View>
-        </View> */}
-
-        {/* <View style={styles.divider} /> */}
-
-        {/* Email Addresses */}
-        {/* <View style={styles.infoBlock}>
-          <Text style={styles.infoTitle}>Email Addresses</Text>
-          <Text style={styles.infoText}>
-            example@clerk.dev <Text style={styles.primaryLabel}>Primary</Text>
-          </Text>
-          <Text style={styles.infoText}>example@personal.com</Text>
-          <Text style={styles.infoText}>email@work.io</Text>
-          <TouchableOpacity>
-            <Text style={styles.addLink}>+ Add Email Address</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.divider} /> */}
-
-        {/* Phone Number */}
-        {/* <View style={styles.infoBlock}>
-          <Text style={styles.infoTitle}>Phone Number</Text>
-          <Text style={styles.infoText}>
-            +1 (555) 123-4567 <Text style={styles.primaryLabel}>Primary</Text>
-          </Text>
-          <TouchableOpacity>
-            <Text style={styles.addLink}>+ Add Phone Number</Text>
-          </TouchableOpacity>
-        </View>
-
-        <View style={styles.divider} /> */}
-
-        {/* Connected Accounts */}
-        {/* <View style={styles.infoBlock}>
-          <Text style={styles.infoTitle}>Connected Accounts</Text>
-          <View style={styles.accountRow}>
-            <Text style={styles.infoText}>🔴 Google • example@email.com</Text>
-          </View>
-          <TouchableOpacity>
-            <Text style={styles.addLink}>+ Connect Account</Text>
-          </TouchableOpacity>
-        </View> */}
       </ScrollView>
     </View>
   );
@@ -173,29 +137,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 15,
   },
-  profileHeader: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginBottom: 20,
-  },
-  avatar: {
-    width: 60,
-    height: 60,
-    borderRadius: 30,
-    marginRight: 15,
-  },
-  profileInfo: {
-    flex: 1,
-  },
-  profileName: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginBottom: 5,
-  },
-  editProfile: {
-    color: "#007AFF",
-    fontSize: 14,
-  },
   divider: {
     height: 1,
     backgroundColor: "#DDD",
@@ -213,24 +154,6 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: "#333",
     marginBottom: 5,
-  },
-  primaryLabel: {
-    fontSize: 12,
-    color: "#007AFF",
-    backgroundColor: "#E0F0FF",
-    paddingVertical: 2,
-    paddingHorizontal: 6,
-    borderRadius: 5,
-    marginLeft: 5,
-  },
-  addLink: {
-    fontSize: 14,
-    color: "#007AFF",
-    marginTop: 5,
-  },
-  accountRow: {
-    flexDirection: "row",
-    alignItems: "center",
   },
   input: {
     borderWidth: 1,

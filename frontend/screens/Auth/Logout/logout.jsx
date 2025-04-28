@@ -1,13 +1,25 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useContext } from 'react';
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native';
+import { signOut } from 'firebase/auth';
+import { auth } from '../../../services/firebaseConfig';
+import { AuthContext } from '../../../context/AuthContext';
 
 export default function Logout({ navigation }) {
+  const { setUser } = useContext(AuthContext);
+
   useEffect(() => {
-    const timer = setTimeout(() => {
-      navigation.replace('WelcomeScreen'); // Navigate back to WelcomeScreen after delay
-    }, 2000);
-    return () => clearTimeout(timer);
-  }, [navigation]);
+    const performLogout = async () => {
+      try {
+        await signOut(auth); // 1. Sign out from Firebase
+        setUser(null);       // 2. Clear user from context
+        navigation.replace('WelcomeScreen'); // 3. Navigate to WelcomeScreen
+      } catch (error) {
+        console.error('Error during logout:', error);
+      }
+    };
+
+    performLogout();
+  }, [navigation, setUser]);
 
   return (
     <View style={styles.container}>

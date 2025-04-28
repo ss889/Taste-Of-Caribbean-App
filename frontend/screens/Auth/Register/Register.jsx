@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../services/firebaseConfig';
+import { auth } from '../../../services/firebaseConfig';
 import * as Crypto from 'expo-crypto'; // Import expo-crypto for password hashing
 
 export default function RegisterScreen({ navigation }) {

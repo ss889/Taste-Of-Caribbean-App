@@ -17,7 +17,7 @@ const AppNav = () => {
   }
 
   return (
-    <NavigationContainer>
+    <NavigationContainer key={user ? 'user' : 'guest'}>
       {user ? <HomeStack /> : <AuthStack />}
     </NavigationContainer>
   );
