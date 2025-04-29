@@ -3,6 +3,7 @@ import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../../src/services/firebaseConfig'; // Updated path to src/services/firebaseConfig
 import * as Crypto from 'expo-crypto'; // Import expo-crypto for password hashing
+import Constants from 'expo-constants'; // Import Constants for environment variables
 
 export default function RegisterScreen({ navigation }) {
   const [localUsername, setLocalUsername] = useState('');
@@ -64,11 +65,11 @@ export default function RegisterScreen({ navigation }) {
         });
 
         // Step 4: Send user data to backend with Authorization header
-        const response = await fetch('http://192.168.0.13:5000/api/auth', { // <<-- your IP here
+        const response = await fetch(`${Constants.expoConfig.extra.API_URL}/api/auth`, { // Use API_URL from .env
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${idToken}`, // <<-- important
+            'Authorization': `Bearer ${idToken}`,
           },
           body: JSON.stringify({
             email: user.email,

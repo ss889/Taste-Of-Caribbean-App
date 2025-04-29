@@ -11,6 +11,7 @@ import {
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../../../src/services/firebaseConfig';
 import { AuthContext } from '../../../context/AuthContext';
+import Constants from 'expo-constants'; // Import Constants for environment variables
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
@@ -25,7 +26,7 @@ export default function LoginScreen({ navigation }) {
       const idToken = await userCredential.user.getIdToken();
 
       // 2. Send token to backend for verification
-      const response = await fetch('http://192.168.0.13:5000/api/login', {
+      const response = await fetch(`${Constants.expoConfig.extra.API_URL}/api/login`, { // Use API_URL from .env
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
