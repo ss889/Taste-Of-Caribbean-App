@@ -1,5 +1,3 @@
-import 'dotenv/config';
-
 export default {
   expo: {
     name: "Taste of Caribbean",
@@ -7,9 +5,7 @@ export default {
     version: "1.0.0",
     orientation: "portrait",
     userInterfaceStyle: "light",
-    assetBundlePatterns: [
-      "**/*"
-    ],
+    assetBundlePatterns: ["**/*"],
     ios: {
       supportsTablet: true
     },
@@ -21,23 +17,19 @@ export default {
       [
         "expo-build-properties",
         {
-          ios: {
-            useFrameworks: "static"
-          },
-          android: {
-            newArchEnabled: true
-          }
+          ios: { useFrameworks: "static" },
+          android: { newArchEnabled: true }
         }
       ]
     ],
     extra: {
-      FIREBASE_API_KEY: process.env.FIREBASE_API_KEY,
-      FIREBASE_AUTH_DOMAIN: process.env.FIREBASE_AUTH_DOMAIN,
-      FIREBASE_PROJECT_ID: process.env.FIREBASE_PROJECT_ID,
-      FIREBASE_STORAGE_BUCKET: process.env.FIREBASE_STORAGE_BUCKET,
-      FIREBASE_MESSAGING_SENDER_ID: process.env.FIREBASE_MESSAGING_SENDER_ID,
-      FIREBASE_APP_ID: process.env.FIREBASE_APP_ID,
-      FIREBASE_MEASUREMENT_ID: process.env.FIREBASE_MEASUREMENT_ID,
+      FIREBASE_API_KEY: "AIzaSyDUp6Cu0BDHWfcqRhVSBD52zTWw-GIF8io",
+      FIREBASE_AUTH_DOMAIN: "taste-of-the-caribbean-app.firebaseapp.com",
+      FIREBASE_PROJECT_ID: "taste-of-the-caribbean-app",
+      FIREBASE_STORAGE_BUCKET: "taste-of-the-caribbean-app.firebasestorage.app",
+      FIREBASE_MESSAGING_SENDER_ID: "113679678200",
+      FIREBASE_APP_ID: "1:113679678200:web:7ba2c3005dc0237553590d",
+      FIREBASE_MEASUREMENT_ID: "G-1V52Q24NCT"
     }
   }
 };
