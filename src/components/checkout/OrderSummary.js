@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity, Image } from 'react-native';
 
-const OrderSummary = ({ items, subtotal, tax, deliveryFee, total, onIncrease, onDecrease }) => {
+const OrderSummary = ({ items, subtotal, tax, deliveryFee, total, onIncrease, onDecrease, onCheckout }) => {
   if (items.length === 0) {
     return (
       <View style={styles.emptyContainer}>
@@ -32,7 +32,7 @@ const OrderSummary = ({ items, subtotal, tax, deliveryFee, total, onIncrease, on
                 <Text style={styles.itemQuantity}>Quantity: {item.quantity}</Text>
               </View>
               <Text style={styles.itemPrice}>
-                ${(typeof item.price === 'number' ? item.price * item.quantity : parseFloat(item.price.replace('$', '')) * item.quantity).toFixed(2)}
+                ${(typeof item.price === 'number' ? item.price * item.quantity : parseFloat((item.price || '0').replace('$', '')) * item.quantity).toFixed(2)}
               </Text>
             </View>
             <View style={styles.itemFooter}>
@@ -46,7 +46,7 @@ const OrderSummary = ({ items, subtotal, tax, deliveryFee, total, onIncrease, on
                 </TouchableOpacity>
               </View>
               <Text style={styles.itemUnitPrice}>
-                ${typeof item.price === 'number' ? item.price.toFixed(2) : item.price.replace('$', '')} each
+                ${typeof item.price === 'number' ? item.price.toFixed(2) : (item.price || '0').replace('$', '')} each
               </Text>
             </View>
           </View>
@@ -71,8 +71,8 @@ const OrderSummary = ({ items, subtotal, tax, deliveryFee, total, onIncrease, on
           <Text style={styles.totalValue}>${total.toFixed(2)}</Text>
         </View>
 
-        <TouchableOpacity style={styles.checkoutButton}>
-          <Text style={styles.checkoutButtonText}>Place Order</Text>
+        <TouchableOpacity style={styles.checkoutButton} onPress={onCheckout}>
+          <Text style={styles.checkoutButtonText}>Proceed to Checkout</Text>
         </TouchableOpacity>
       </View>
     </View>
