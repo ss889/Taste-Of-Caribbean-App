@@ -37,7 +37,7 @@ export const menuItems = [
     category: 'Drinks',
     price: '$6.99',
     description: 'A sweet holiday drink made using natural hibsicus leaves.',
-    image: '/assets/images/Sorrel.jpg'
+    image: '/assets/images/Sorrel.jpeg'
   },
   {
     id: '6',
@@ -45,7 +45,7 @@ export const menuItems = [
     category: 'Main Dishes',
     price: '$13.99',
     description: 'Chicken Marinated authetnic Jamaican spices and cooked too perfection',
-    image: '/assets/images/JerkChicken.jpg'
+    image: '/assets/images/jerk-chicken.jpeg'
   },
   {
     id: '7',

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, View, Text, TouchableOpacity } from 'react-native';
 import Menu from './src/components/menu/Menu';
-import OrderSummary from './src/components/checkout/OrderSummary';
+import CartScreen from './src/screens/CartScreen';
 
 export default function App() {
   const [cart, setCart] = useState([]);
@@ -52,11 +52,15 @@ export default function App() {
         {activeTab === 'Menu' ? (
           <Menu addToCart={addToCart} />
         ) : (
-          <OrderSummary
-            items={cart}
+          <CartScreen
+            cart={cart}
             {...calculateTotal()}
             onIncrease={(id) => updateQuantity(id, 1)}
             onDecrease={(id) => updateQuantity(id, -1)}
+            onOrderComplete={() => {
+              setCart([]);
+              setActiveTab('Menu');
+            }}
           />
         )}
       </View>
