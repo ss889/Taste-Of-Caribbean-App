@@ -4,7 +4,7 @@
     "slug": "taste-of-caribbean-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./assets/Logo.png",
     "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
@@ -28,7 +28,7 @@
     "web": {
       "favicon": "./assets/favicon.png"
     },
-    "sdkVersion": "52.0.0",
+    "sdkVersion": "53.0.0",
     "newArchEnabled": true
   }
 }
