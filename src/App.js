@@ -1,9 +1,28 @@
+/**
+ * Main App Component
+ * 
+ * This is the root component of the Taste of Caribbean App. It manages:
+ * - The menu items data
+ * - The shopping cart state
+ * - Navigation between Menu and Order Summary screens
+ * - Cart operations (add, increase, decrease quantity)
+ * 
+ * The app uses a simple tab-based navigation between the Menu and Order Summary.
+ * All cart operations and calculations happen in this component and are passed
+ * down to child components as props.
+ */
 import React, { useState } from 'react';
 import { SafeAreaView, StyleSheet, Alert, View, TouchableOpacity, Text } from 'react-native';
 import Menu from './components/menu/Menu';
 import OrderSummary from './components/checkout/OrderSummary';
 
-// Standardized menu items (from Menu.js)
+/**
+ * Menu Items Data
+ * 
+ * This array contains all the food items available in the app.
+ * Each item has: id, name, category, price, description, and image.
+ * These items are passed to the Menu component for display.
+ */
 const MENU_ITEMS = [
   { id: '1', name: 'Escovitch Fish', category: 'Main Dishes', price: 12.99, description: 'Crispy fried fish topped with tangy pickled vegetables.', image: require('./assets/images/escovitch-fish.jpg') },
   { id: '2', name: 'Oxtail Stew', category: 'Main Dishes', price: 14.99, description: 'Slow-cooked oxtail in a rich, flavorful gravy with butter beans.', image: require('./assets/images/oxtail-stew.jpg') },
@@ -15,10 +34,18 @@ const MENU_ITEMS = [
   { id: '8', name: 'Curry Goat', category: 'Main Dishes', price: 14.99, description: 'Tender, goat simmered in bold Jamaican curry spices, bursting with island heat', image: require('./assets/images/CurryGoat.jpg') },
 ];
 
+/**
+ * Main App Component
+ * @returns {JSX.Element} The rendered App component
+ */
 export default function App() {
   const [cart, setCart] = useState([]);
   const [activeTab, setActiveTab] = useState('Menu');
 
+  /**
+   * Adds an item to the cart or increases its quantity if already in cart
+   * @param {Object} item - The menu item to add to cart
+   */
   const addToCart = (item) => {
     setCart((prevCart) => {
       const existing = prevCart.find((i) => i.id === item.id);
@@ -34,6 +61,10 @@ export default function App() {
     });
   };
 
+  /**
+   * Increases the quantity of an item in the cart
+   * @param {string} itemId - The ID of the item to increase
+   */
   const increaseQuantity = (itemId) => {
     setCart((prevCart) =>
       prevCart.map((item) =>
@@ -42,6 +73,11 @@ export default function App() {
     );
   };
 
+  /**
+   * Decreases the quantity of an item in the cart
+   * Removes the item if quantity becomes zero
+   * @param {string} itemId - The ID of the item to decrease
+   */
   const decreaseQuantity = (itemId) => {
     setCart((prevCart) =>
       prevCart
@@ -52,12 +88,23 @@ export default function App() {
     );
   };
 
+  /**
+   * Calculate order totals for the OrderSummary component
+   * - subtotal: sum of (item price × quantity) for all items
+   * - tax: 8% of subtotal
+   * - deliveryFee: $3.99 if cart has items, otherwise $0
+   * - total: subtotal + tax + deliveryFee
+   */
   // Calculate totals for OrderSummary
   const subtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const tax = subtotal * 0.08;
   const deliveryFee = cart.length > 0 ? 3.99 : 0;
   const total = subtotal + tax + deliveryFee;
 
+  /**
+   * Tab Bar Component - Handles navigation between Menu and Order Summary screens
+   * @returns {JSX.Element} The rendered TabBar component
+   */
   // Tab bar component
   const TabBar = () => (
     <View style={styles.tabBar}>

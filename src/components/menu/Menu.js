@@ -1,15 +1,44 @@
+/**
+ * Menu Component
+ * 
+ * This component displays all food items in a grid layout with filtering by category.
+ * Users can browse items and add them to their cart from this screen.
+ * 
+ * Features:
+ * - Category filtering (All, Appetizers, Main Dishes, Drinks)
+ * - Grid display of menu items with images
+ * - Item details (name, price, description)
+ * - Add to cart functionality
+ */
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity, Image } from 'react-native';
 
+/**
+ * Menu Component
+ * @param {Object} props - Component props
+ * @param {Array} props.menuItems - Array of menu items to display
+ * @param {Function} props.addToCart - Function to add an item to the cart
+ * @returns {JSX.Element} The rendered Menu component
+ */
 const Menu = ({ menuItems, addToCart }) => {
+  // State to track which category is currently selected
   const [selectedCategory, setSelectedCategory] = useState('All');
 
+  // Available food categories for filtering
   const categories = ['All', 'Appetizers', 'Main Dishes', 'Drinks'];
 
+  /**
+   * Filter menu items based on the selected category
+   * If 'All' is selected, show all items, otherwise filter by category
+   */
   const filteredItems = selectedCategory === 'All'
     ? menuItems
     : menuItems.filter(item => item.category === selectedCategory);
 
+  /**
+   * Renders the category filter buttons at the top of the menu
+   * @returns {JSX.Element} The category buttons row
+   */
   const renderCategoryButtons = () => (
     <View style={styles.categoryContainer}>
       {categories.map(category => (
@@ -27,6 +56,12 @@ const Menu = ({ menuItems, addToCart }) => {
     </View>
   );
 
+  /**
+   * Renders an individual menu item card
+   * @param {Object} param0 - The item to render
+   * @param {Object} param0.item - The menu item data
+   * @returns {JSX.Element} A card displaying the menu item
+   */
   const renderItem = ({ item }) => (
     <View style={styles.card}>
       <Image source={item.image} style={styles.image} />
